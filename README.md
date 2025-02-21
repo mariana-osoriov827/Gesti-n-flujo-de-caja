@@ -18,3 +18,19 @@ Este proyecto es una solución en Python diseñada para ayudar a emprendedores y
 ## Requisitos
 - Python 3.x
 - Librerías: pandas, matplotlib, numpy
+  
+## Uso
+
+Clona este repositorio y navega hasta la carpeta del proyecto. Ejecuta el script principal (por ejemplo, `python main.py`). Al iniciar, se te solicitará el nombre del archivo csv a cargar (con extensión `.csv`). Si el archivo no existe, se creará uno nuevo con la estructura necesaria. El programa registra transacciones, genera reportes, gráficos e indicadores financieros que te ayudarán a analizar el estado y la tendencia de tu flujo de caja.
+
+## Archivos csv
+
+El proyecto utiliza archivos csv con la siguiente estructura:
+
+```csv
+fecha,tipo,categoria,monto,descripcion
+2025-01-05,ingreso,ventas,3000,venta producto a
+2025-01-10,gasto,marketing,500,campaña publicidad
+2025-01-15,ingreso,servicios,1500,consultoría
+2025-01-20,gasto,suministros,200,compra materiales
+...
