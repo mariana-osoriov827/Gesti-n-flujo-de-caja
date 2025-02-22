@@ -2,7 +2,7 @@
 
 Este proyecto es una solución en Python diseñada para ayudar a emprendedores y profesionales a gestionar su flujo de caja de forma eficiente. Integra conceptos de ingeniería de sistemas y finanzas, permitiendo el registro, análisis y simulación de transacciones para apoyar la toma de decisiones financieras en startups.
 
-## Características
+## Funciones
 
 ### Cargar CSV
 Permite cargar un archivo CSV con transacciones financieras. Si el archivo no existe, se crea automáticamente con la estructura necesaria.
