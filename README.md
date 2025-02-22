@@ -10,9 +10,9 @@ Permite cargar un archivo CSV con transacciones financieras. Si el archivo no ex
 ### Generar reporte
 Genera un reporte mensual con la siguiente información:
 - **Mes y año**
-- **Ingresos totales (moneda local)**
-- **Gastos totales (moneda local)**
-- **Flujo neto (moneda local)**
+- **Ingresos totales (COP)**
+- **Gastos totales (COP)**
+- **Flujo neto (COP)**
 - **Rentabilidad (%)**
 - **Categorías de ingresos y gastos**
 
@@ -47,15 +47,69 @@ Utiliza técnicas de inteligencia artificial para predecir la evolución futura 
 
 ## Requisitos
 - Python 3.x
-- Librerías: pandas, matplotlib, numpy
-  
+- Librerías: pandas, matplotlib, numpy, sklearn
+
 ## Uso
 
-Clona este repositorio y navega hasta la carpeta del proyecto. Ejecuta el script principal (por ejemplo, `python main.py`). Al iniciar, se te solicitará el nombre del archivo CSV a cargar (con extensión `.csv`). Si el archivo no existe, se creará uno nuevo con la estructura necesaria. El programa registra transacciones, genera reportes, gráficos e indicadores financieros que te ayudarán a analizar el estado y la tendencia de tu flujo de caja.
+Aquí te explicamos cómo usar el Gestor de Flujo de Caja paso a paso:
+
+### 1. **Cargar el archivo CSV**
+   - Al iniciar el programa (`python main.py`), se abrirá una interfaz gráfica interactiva. En ella, haz clic en el botón **"Cargar archivo CSV"** para seleccionar el archivo que contiene tus transacciones financieras.
+   - Si no tienes un archivo existente, el programa creará automáticamente uno con la estructura inicial:
+     ```csv
+     fecha,tipo,categoria,monto,descripcion
+     2025-01-01,ingreso,ventas,5000.00,Ingreso por ventas
+     2025-01-15,gasto,marketing,800.00,Campaña publicitaria
+     2025-01-20,gasto,suministros,400.00,Compra de insumos
+     ```
+     - **fecha**: Fecha de la transacción en formato `YYYY-MM-DD`.
+     - **tipo**: Puede ser `ingreso` o `gasto`.
+     - **categoria**: Tipo de transacción (por ejemplo, ventas, marketing, suministros).
+     - **monto**: Monto de la transacción, expresado en **COP** (Pesos Colombianos).
+     - **descripcion**: Detalle opcional de la transacción.
+
+### 2. **Generar un reporte financiero mensual**
+   - Una vez cargadas las transacciones, haz clic en el botón **"Generar reporte"**. Esto mostrará un resumen financiero mensual con las siguientes columnas:
+     - **Mes y Año**: Periodo de la transacción.
+     - **Ingresos totales (COP)**.
+     - **Gastos totales (COP)**.
+     - **Flujo neto (COP)**.
+     - **Flujo acumulado (COP)**.
+     - Indicadores como **Burn Rate**, **Liquidez**, y **Rentabilidad (%)**.
+   - Este reporte se muestra en una ventana de la interfaz y puede ser exportado a un archivo CSV para análisis externo.
+
+### 3. **Visualización de datos**
+   - Haz clic en **"Generar gráficos"** para visualizar tus transacciones financieras con gráficos detallados:
+     - **Gráfico de barras apiladas**: Muestra los ingresos y gastos totales por mes.
+     - **Distribución de gastos** por categoría.
+     - **Distribución de ingresos** por categoría.
+   - Los gráficos permiten identificar patrones y tendencias, facilitando la toma de decisiones.
+
+### 4. **Proyección del flujo de caja**
+   - Haz clic en el botón **"Proyección"** para predecir el comportamiento del flujo de caja en los próximos 4 meses. Las predicciones utilizan inteligencia artificial (modelo de regresión lineal) basada en los datos históricos.
+   - Verás un reporte como el siguiente:
+     ```csv
+     Mes futuro,Ingreso estimado (COP),Gasto estimado (COP)
+     Mes 1,5200.00,1600.00
+     Mes 2,5400.00,1700.00
+     Mes 3,5600.00,1800.00
+     Mes 4,5800.00,1900.00
+     ```
+     - **Ingreso estimado (COP)**: Proyección mensual de ingresos.
+     - **Gasto estimado (COP)**: Proyección mensual de gastos.
+
+### 5. **Registrar nuevas transacciones**
+   - Edita manualmente tu archivo CSV con nuevas transacciones y vuelve a cargarlo en la aplicación para actualizar los datos.
+   - Alternativamente, utiliza la funcionalidad de simulación de transacciones para calcular el impacto de una transacción hipotética en el balance actual sin alterar los datos originales.
+
+### 6. **Exportar reportes**
+   - Desde la ventana del reporte financiero, puedes guardar los datos generados como un archivo CSV. Esto es útil para archivo histórico o análisis en herramientas externas como Excel.
+
+---
 
 ## Archivos CSV
 
-El proyecto utiliza archivos CSV con la siguiente estructura:
+El programa trabaja con archivos CSV que deben seguir el formato proporcionado. Aquí tienes un ejemplo de archivo que puedes usar como base:
 
 ```csv
 fecha,tipo,categoria,monto,descripcion
@@ -64,3 +118,23 @@ fecha,tipo,categoria,monto,descripcion
 2025-01-15,ingreso,servicios,1500,consultoría
 2025-01-20,gasto,suministros,200,compra materiales
 ...
+```
+
+---
+
+### Ejemplo de flujo de trabajo
+
+1. **Inicio**: Abres la aplicación y cargas el archivo CSV con tus transacciones.
+2. **Balance actual**: Automáticamente se calcula el balance financiero basado en los datos cargados.
+3. **Reporte detallado**: Generas un reporte financiero mensual.
+4. **Visualización con gráficos**: Generas gráficos que detallan ingresos, gastos y distribuciones.
+5. **Proyección del flujo de caja**: Generas predicciones financieras.
+6. **Exportación**: Exportas los reportes a un archivo CSV.
+
+---
+
+### Notas importantes:
+- **Formato de fechas**: Asegúrate de que las fechas estén en el formato `YYYY-MM-DD`.
+- **Valores de moneda**: Todos los valores monetarios deben estar en **COP (Pesos Colombianos)**.
+- **Errores comunes**:
+  - Si el archivo CSV tiene valores faltantes o categorías inconsistentes, la carga fallará. Limpia y verifica tus datos antes de importarlos.
