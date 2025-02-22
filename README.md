@@ -36,9 +36,6 @@ Genera gráficos de barras para visualizar:
 - **Distribución de gastos por categoría**
 - **Distribución de ingresos por categoría**
 
-### Exportación de reportes
-Permite exportar los reportes financieros a un archivo CSV para análisis externo o archivo histórico.
-
 ### Detección de patrones de gasto
 Analiza las transacciones para identificar categorías con altos niveles de gasto y sugiere posibles ajustes para optimizar recursos.
 
@@ -76,8 +73,7 @@ Aquí te explicamos cómo usar el Gestor de Flujo de Caja paso a paso:
      - **Flujo neto (COP)**.
      - **Flujo acumulado (COP)**.
      - Indicadores como **Burn Rate**, **Liquidez**, y **Rentabilidad (%)**.
-   - Este reporte se muestra en una ventana de la interfaz y puede ser exportado a un archivo CSV para análisis externo.
-
+     - 
 ### 3. **Visualización de datos**
    - Haz clic en **"Generar gráficos"** para visualizar tus transacciones financieras con gráficos detallados:
      - **Gráfico de barras apiladas**: Muestra los ingresos y gastos totales por mes.
@@ -101,10 +97,7 @@ Aquí te explicamos cómo usar el Gestor de Flujo de Caja paso a paso:
 ### 5. **Registrar nuevas transacciones**
    - Edita manualmente tu archivo CSV con nuevas transacciones y vuelve a cargarlo en la aplicación para actualizar los datos.
    - Alternativamente, utiliza la funcionalidad de simulación de transacciones para calcular el impacto de una transacción hipotética en el balance actual sin alterar los datos originales.
-
-### 6. **Exportar reportes**
-   - Desde la ventana del reporte financiero, puedes guardar los datos generados como un archivo CSV. Esto es útil para archivo histórico o análisis en herramientas externas como Excel.
-
+     
 ---
 
 ## Archivos CSV
@@ -129,7 +122,6 @@ fecha,tipo,categoria,monto,descripcion
 3. **Reporte detallado**: Generas un reporte financiero mensual.
 4. **Visualización con gráficos**: Generas gráficos que detallan ingresos, gastos y distribuciones.
 5. **Proyección del flujo de caja**: Generas predicciones financieras.
-6. **Exportación**: Exportas los reportes a un archivo CSV.
 
 ---
 
