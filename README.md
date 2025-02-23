@@ -53,7 +53,7 @@ Evalúa el impacto de una transacción hipotética en el balance actual sin modi
 Analiza las transacciones para identificar categorías con altos niveles de gasto en comparación con el total y sugiere dónde optimizar.
 
 ### 7. Proyección del flujo de caja
-Utiliza inteligencia artificial (**IA**) para predecir la evolución futura del flujo de caja, modelando datos históricos con un enfoque de **regresión lineal**. Permite estimar:
+Utiliza módulo de inteligencia artificial (**IA**) para predecir la evolución futura del flujo de caja a partir de regresiones, modelando datos históricos con un enfoque de **regresión lineal**. Permite estimar:
 - **Ingresos estimados** (próximos 4 meses).
 - **Gastos estimados** (próximos 4 meses).
 
