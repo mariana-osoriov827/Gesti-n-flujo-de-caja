@@ -48,7 +48,7 @@ Utiliza técnicas de inteligencia artificial para predecir la evolución futura 
 
 ## Uso
 
-Aquí te explicamos cómo usar el Gestor de Flujo de Caja paso a paso:
+Para usar el programa, debes clonarlo en tu máquina. Luego, al ejecutarlo, debes seguir los siguientes pasos:
 
 ### 1. **Cargar el archivo CSV**
    - Al iniciar el programa (`python main.py`), se abrirá una interfaz gráfica interactiva. En ella, haz clic en el botón **"Cargar archivo CSV"** para seleccionar el archivo que contiene tus transacciones financieras.
