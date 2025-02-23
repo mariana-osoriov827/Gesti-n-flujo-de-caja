@@ -1,11 +1,11 @@
 import tkinter as tk
 from tkinter import filedialog, messagebox
+from sklearn.linear_model import LinearRegression
 from tkinter import ttk
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-from sklearn.linear_model import LinearRegression
 
 
 class GestorFlujoCaja:
@@ -43,7 +43,7 @@ class GestorFlujoCaja:
 
         self.transacciones["mes_año"] = self.transacciones["fecha"].dt.strftime('%B %Y')
         rep = self.transacciones.groupby(["mes_año", "tipo"])["monto"].sum().unstack().fillna(0)
-        rep["Mes y Año"] = rep.index  # Agregar la columna con Mes y Año directamente
+        rep["Mes y año"] = rep.index  # Agregar la columna con Mes y Año directamente
         rep["flujo_neto"] = rep.get("ingreso", 0) - rep.get("gasto", 0)
         rep["flujo_acumulado"] = rep["flujo_neto"].cumsum()
 
@@ -116,23 +116,27 @@ class GestorFlujoCaja:
             messagebox.showinfo("Información", "No hay datos suficientes para hacer proyecciones.")
             return None
 
+        # Preparar los datos para el modelo
         self.transacciones["mes_num"] = self.transacciones["fecha"].dt.to_period("M").astype("category").cat.codes
         ingresos = self.transacciones[self.transacciones["tipo"] == "ingreso"].groupby("mes_num")["monto"].sum()
         gastos = self.transacciones[self.transacciones["tipo"] == "gasto"].groupby("mes_num")["monto"].sum()
 
         datos = pd.DataFrame({"ingresos": ingresos, "gastos": gastos}).fillna(0)
 
-        X = np.arange(len(datos)).reshape(-1, 1)
+        X = np.arange(len(datos)).reshape(-1, 1)  # Los índices de los meses
         y_ingresos = datos["ingresos"].values.reshape(-1, 1)
         y_gastos = datos["gastos"].values.reshape(-1, 1)
 
+        # Entrenar los modelos (ingresos y gastos)
         modelo_ingresos = LinearRegression().fit(X, y_ingresos)
         modelo_gastos = LinearRegression().fit(X, y_gastos)
 
+        # Proyectar ingresos y gastos para los próximos 4 meses
         futuros = np.arange(len(datos), len(datos) + 4).reshape(-1, 1)
         pred_ingresos = modelo_ingresos.predict(futuros).flatten()
         pred_gastos = modelo_gastos.predict(futuros).flatten()
 
+        # Crear DataFrame con las predicciones
         proyeccion = pd.DataFrame({
             "Mes futuro": [f"Mes {i + 1}" for i in range(len(futuros))],
             "Ingreso estimado (COP)": pred_ingresos,
@@ -141,28 +145,25 @@ class GestorFlujoCaja:
 
         return proyeccion
 
-    def generar_alerta(self):
-        if self.transacciones.empty:
-            messagebox.showinfo("Información", "No hay datos para generar alertas.")
-            return
+    def simular_transaccion(self, monto, tipo):
+        if tipo not in ["ingreso", "gasto"]:
+            raise ValueError("El tipo de transacción debe ser 'ingreso' o 'gasto'.")
 
-        gastos = self.transacciones[self.transacciones["tipo"] == "gasto"]
-        if gastos.empty:
-            messagebox.showinfo("Información", "No se registraron gastos.")
-            return
+        balance_actual = self.balance_actual()
 
-        # Agrupar gastos por categoría o tipo
-        resumen = gastos.groupby("categoria")["monto"].sum()
+        if tipo == "ingreso":
+            balance_simulado = balance_actual + monto
+        elif tipo == "gasto":
+            balance_simulado = balance_actual - monto
 
-        gasto_total = resumen.sum()
-        categorias_alerta = resumen[resumen > 0.2 * gasto_total]  # Categorías con más del 20% del total
-
-        if categorias_alerta.empty:
-            messagebox.showinfo("Alerta", "No se encontraron gastos significativos.")
-        else:
-            alertas = "\n".join([f"{cat}: ${monto:,.2f}" for cat, monto in categorias_alerta.items()])
-            messagebox.showinfo("Alertas de Gasto",
-                                f"Se detectaron gastos elevados en las siguientes categorías:\n\n{alertas}")
+        # Retornar los resultados de la simulación
+        return {
+            "balance_actual": balance_actual,
+            "balance_simulado": balance_simulado,
+            "tipo_transaccion": tipo,
+            "monto_transaccion": monto,
+            "diferencia": balance_simulado - balance_actual
+        }
 
 
 class Interfaz:
@@ -193,8 +194,8 @@ class Interfaz:
         self.boton_proyeccion = ttk.Button(frame, text="🔮 Proyección", command=self.generar_proyeccion)
         self.boton_proyeccion.pack(pady=5, fill=tk.X)
 
-        self.boton_alerta = ttk.Button(frame, text="⚠️ Generar alerta", command=self.generar_alerta)
-        self.boton_alerta.pack(pady=5, fill=tk.X)
+        self.boton_simulacion = ttk.Button(frame, text="🧮 Simular transacción", command=self.simular_transaccion)
+        self.boton_simulacion.pack(pady=5, fill=tk.X)
 
         self.label_balance = ttk.Label(frame, text="Balance actual: $0")
         self.label_balance.pack(pady=10)
@@ -228,8 +229,44 @@ class Interfaz:
                 tree.insert("", "end", values=row.tolist())
             tree.pack(fill=tk.BOTH, expand=True)
 
-    def generar_alerta(self):
-        self.gestor.generar_alerta()
+    def simular_transaccion(self):
+        def realizar_simulacion():
+            try:
+                monto = float(entry_monto.get())
+                tipo = combo_tipo.get().lower()
+                resultados = self.gestor.simular_transaccion(monto, tipo)
+
+                messagebox.showinfo(
+                    "Resultados de la Simulación",
+                    f"Balance actual: ${resultados['balance_actual']:,.2f} COP\n"
+                    f"Tipo de transacción: {resultados['tipo_transaccion']}\n"
+                    f"Monto de la transacción: ${resultados['monto_transaccion']:,.2f} COP\n"
+                    f"Balance simulado: ${resultados['balance_simulado']:,.2f} COP\n"
+                    f"Diferencia: ${resultados['diferencia']:,.2f} COP"
+                )
+            except ValueError as ve:
+                messagebox.showerror("Error", f"Entrada no válida: {ve}")
+            except Exception as e:
+                messagebox.showerror("Error", f"{e}")
+
+        ventana_simulacion = tk.Toplevel(self.root)
+        ventana_simulacion.title("Simular transacción")
+        ventana_simulacion.geometry("400x300")
+
+        frame_simulacion = ttk.Frame(ventana_simulacion)
+        frame_simulacion.pack(pady=20, padx=20, fill=tk.BOTH, expand=True)
+
+        ttk.Label(frame_simulacion, text="Tipo de Transacción:").pack(anchor="w")
+        combo_tipo = ttk.Combobox(frame_simulacion, values=["Ingreso", "Gasto"], state="readonly")
+        combo_tipo.current(0)
+        combo_tipo.pack(fill=tk.X, pady=5)
+
+        ttk.Label(frame_simulacion, text="Monto (COP):").pack(anchor="w")
+        entry_monto = ttk.Entry(frame_simulacion)
+        entry_monto.pack(fill=tk.X, pady=5)
+
+        boton_realizar = ttk.Button(frame_simulacion, text="Simular", command=realizar_simulacion)
+        boton_realizar.pack(pady=10)
 
 
 if __name__ == "__main__":
