@@ -84,12 +84,9 @@ Mes 4,5800.00,1900.00
 ---
 
 ## Uso
+Clona el repositorio en tu espacio de trabajo, luego:
 
 1. **Inicia la aplicación**:
-   Ejecuta el programa principal:
-   ```bash
-   python main.py
-   ```
    Esto abrirá una interfaz gráfica de usuario (GUI).
 
 2. **Carga un archivo CSV**:
