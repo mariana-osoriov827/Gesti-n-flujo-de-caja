@@ -1,0 +1,17 @@
+fecha,tipo,categoria,monto,descripcion
+2025-01-05,ingreso,ventas,3000,Venta de producto A
+2025-01-10,gasto,marketing,500,Campaña de publicidad
+2025-01-15,ingreso,servicios,1500,Consultoría
+2025-01-20,gasto,suministros,200,Compra de materiales
+2025-02-01,ingreso,ventas,3200,Venta de producto B
+2025-02-05,gasto,alquiler,800,Pago de oficina
+2025-02-10,gasto,personal,1200,Salario empleado
+2025-03-01,ingreso,ventas,4500,Venta de producto C
+2025-03-05,gasto,marketing,700,Campaña en redes sociales
+2025-03-10,gasto,proveedor,1500,Pago a proveedor
+2025-01-05,ingreso,ventas,3000,Venta A
+2025-01-10,gasto,marketing,500,Publicidad
+2025-01-05,ingreso,ventas,3000,Venta A
+2025-01-10,gasto,marketing,500,Publicidad
+2025-01-05,ingreso,ventas,3000,Venta A
+2025-01-10,gasto,marketing,500,Publicidad
