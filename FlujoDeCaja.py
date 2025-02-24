@@ -52,7 +52,7 @@ class GestorFlujoCaja:
         rep["rentabilidad"] = (rep["flujo_neto"] / rep.get("ingreso", 1).replace(0, 1)) * 100
         rep["dias_efectivo"] = rep["flujo_acumulado"] / (rep.get("gasto", 1).replace(0, 1) / 30)
 
-        # Renombrar columnas con unidades y asegurarse de que "Mes y Año" sea la primera columna
+        # Renombrar columnas con unidades
         rep = rep.rename(columns={
             "ingreso": "Ingreso (COP)",
             "gasto": "Gasto (COP)",
